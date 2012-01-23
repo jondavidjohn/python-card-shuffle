@@ -30,4 +30,4 @@ python setup.py install
 ```python
 import shuffle
 
-shuffled_list = shuffle.riffle(original_list, 3)
+shuffled_list = shuffle.riffle(original_list, 3)  # shuffles the list 3 times
