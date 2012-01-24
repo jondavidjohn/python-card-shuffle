@@ -13,48 +13,54 @@ PyObject *do_overhand(PyObject *origList, int num_shuffles)
 	length = PyList_Size(origList);
 	shuffledList = PyList_New((int)length);
 
+	// progress through shuffled list (backward)
 	s = (int)length - 1;
+
+	// progress through original list (forward)
 	o = 0;
 
+	// make sure we don't run off the end of the original list
 	while ( o < length )
 	{
 
-		int limit;
-
+		// random item number ceiling
+		int ceiling;
 		if (length > 50)
 		{
-			limit = 10;
+			ceiling = 10;
 		}
 		else
 		{
-			limit = length > 10 ? (int)(.1 * length) : 1;
+			ceiling = length > 10 ? (int)(.1 * length) : 1;
 		}
 
-		// get random number of cards not to exceed 10% of the list (if more than 10 items)
-		int num_cards = (rand() % limit) + 1;
+		// get random number of items (min of 1), respecting the limit
+		int num_items = (rand() % ceiling) + 1;
 
 		double remaining = length - o;
-
 		if (num_cards > remaining)
 		{
 			num_cards = remaining;
 		}
 
 		int i;
-		for (i = 0; i < num_cards; i++)
+		for (i = 0; i < num_items; i++)
 		{
-			// add item to new shuffledList from the position in the origList
+			// add item to new shuffledList from the the origList
+			// o + i = position in original list
 			PyObject *temp = PyList_GetItem(origList, o + i);
 			if (temp == NULL) {
 				Py_DECREF(shuffledList);
 				return NULL;
 			}
-			PyList_SET_ITEM(shuffledList, s - (num_cards - (i + 1)) , temp);
+			// s - (num_items - (i + 1)) = new position in shuffledList
+			PyList_SET_ITEM(shuffledList, s - (num_items - (i + 1)) , temp);
 			Py_INCREF(temp);
 		}
 
-		s -= num_cards;
-		o += num_cards;
+		// move progress identifiers to next position
+		s -= num_items;
+		o += num_items;
 	}
 
 	// recursively shuffle the desired amount
