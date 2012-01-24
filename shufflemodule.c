@@ -23,7 +23,7 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 
 		while ( (card_index + num_piles) < length )
 		{
-			printf("Card Index => %d\n", card_index);
+			printf("Card Index => %d placed in %d\n", card_index, card_index + num_piles);
 			PyObject *temp = PyList_GetItem(origList, card_index);
 			if (temp == NULL) {
 				Py_DECREF(shuffledList);
