@@ -17,6 +17,15 @@ a python List as if it were a deck of cards.
 shuffle.riffle(list[, int])
 ```
 
+### Overhand
+  Predictable behaviours that make a human overhand shuffle imperfect
+
+  - Random amounts of cards (chunks) are taken from the top and placed placed in the opposite hand in reverse order (retaining the order within each chunk)
+
+```
+shuffle.overhand(list[, int])
+```
+
 ## Installation
 
 ```
@@ -30,4 +39,6 @@ python setup.py install
 ```python
 import shuffle
 
-shuffled_list = shuffle.riffle(original_list, 3)  # shuffles the list 3 times
+riffled_list = shuffle.riffle(original_list, 3)  # riffles the list 3 times
+overhanded_list = shuffle.overhand(original_list, 2)  #overhand's the list 2 times
+```
