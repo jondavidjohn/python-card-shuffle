@@ -3,7 +3,70 @@
 #include <stdlib.h>
 #include <string.h>
 
-PyObject *do_shuffle(PyObject *origList, int num_shuffles)
+PyObject *do_overhand(PyObject *origList, int num_shuffles)
+{
+	srand((int)time(NULL));
+	int o, s;
+	double length;
+	PyObject * shuffledList;
+
+	length = PyList_Size(origList);
+	shuffledList = PyList_New((int)length);
+
+	s = (int)length - 1;
+	o = 0;
+
+	while ( o < length )
+	{
+
+		int limit;
+
+		if (length > 50)
+		{
+			limit = 10;
+		}
+		else
+		{
+			limit = length > 10 ? (int)(.1 * length) : 1;
+		}
+
+		// get random number of cards not to exceed 10% of the list (if more than 10 items)
+		int num_cards = (rand() % limit) + 1;
+
+		double remaining = length - o;
+
+		if (num_cards > remaining)
+		{
+			num_cards = remaining;
+		}
+
+		int i;
+		for (i = 0; i < num_cards; i++)
+		{
+			// add item to new shuffledList from the position in the origList
+			PyObject *temp = PyList_GetItem(origList, o + i);
+			if (temp == NULL) {
+				Py_DECREF(shuffledList);
+				return NULL;
+			}
+			PyList_SET_ITEM(shuffledList, s - (num_cards - (i + 1)) , temp);
+			Py_INCREF(temp);
+		}
+
+		s -= num_cards;
+		o += num_cards;
+	}
+
+	// recursively shuffle the desired amount
+	num_shuffles--;
+	if (num_shuffles > 0)
+		shuffledList = do_overhand(shuffledList, num_shuffles);
+
+	return shuffledList;
+
+}
+
+PyObject *do_riffle(PyObject *origList, int num_shuffles)
 {
 	// how many times a card has been used consecutively from the same half
 	int const max_streak = 10;
@@ -16,7 +79,7 @@ PyObject *do_shuffle(PyObject *origList, int num_shuffles)
 	length = (int)PyList_Size(origList);
 	shuffledList = PyList_New((int)length);
 
-	
+
 	// initialize the current pointer
 	current_ptr = (rand() % 2) ? &f : &l;
 
@@ -67,7 +130,7 @@ PyObject *do_shuffle(PyObject *origList, int num_shuffles)
 		}
 		PyList_SET_ITEM(shuffledList, m, temp);
 		Py_INCREF(temp);
-		
+
 		// increment streak
 		streak += 1;
 	}
@@ -93,9 +156,25 @@ PyObject *do_shuffle(PyObject *origList, int num_shuffles)
 	// recursively shuffle the desired amount
 	num_shuffles--;
 	if (num_shuffles > 0)
-		shuffledList = do_shuffle(shuffledList, num_shuffles);
+		shuffledList = do_riffle(shuffledList, num_shuffles);
 
 	return shuffledList;
+
+}
+
+static PyObject *shuffle_overhand(PyObject *self, PyObject *args)
+{
+
+	PyObject * origList;
+	int num_shuffles = 1;
+
+	// parse args to list
+	if (! PyArg_ParseTuple( args, "O|i", &origList, &num_shuffles) )
+	{
+		return NULL;
+	}
+
+	return do_overhand(origList, num_shuffles);
 
 }
 
@@ -111,12 +190,13 @@ static PyObject *shuffle_riffle(PyObject *self, PyObject *args)
 		return NULL;
 	}
 
-	return do_shuffle(origList, num_shuffles);
+	return do_riffle(origList, num_shuffles);
 
 }
 
 static PyMethodDef ShuffleMethods[] = {
 	{"riffle", shuffle_riffle, METH_VARARGS, "Simulate a Riffle Shuffle on a List."},
+	{"overhand", shuffle_overhand, METH_VARARGS, "Simulate an Overhand Shuffle on a List"},
 	{NULL, NULL, 0, NULL}
 };
 
