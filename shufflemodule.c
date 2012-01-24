@@ -175,7 +175,7 @@ PyObject *do_overhand(PyObject *origList, int num_shuffles)
 PyObject *do_riffle(PyObject *origList, int num_shuffles)
 {
 
-	if (num_shuffles == 0) { return &origList; }
+	if (num_shuffles == 0) { return *origList; }
 
 	// how many times an item has been used consecutively from the same half
 	int const max_streak = 10;
