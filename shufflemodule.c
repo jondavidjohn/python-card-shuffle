@@ -5,6 +5,9 @@
 
 PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 {
+
+	if (num_shuffles == 0) { return origList; }
+
 	srand((int)time(NULL));
 	double length;
 	PyObject * shuffledList;
@@ -50,6 +53,9 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 
 PyObject *do_mongean(PyObject *origList, int num_shuffles)
 {
+
+	if (num_shuffles == 0) { return origList; }
+
 	srand((int)time(NULL));
 	double length;
 	PyObject * shuffledList;
@@ -93,6 +99,9 @@ PyObject *do_mongean(PyObject *origList, int num_shuffles)
 
 PyObject *do_overhand(PyObject *origList, int num_shuffles)
 {
+
+	if (num_shuffles == 0) { return origList; }
+
 	srand((int)time(NULL));
 	int o, s;
 	double length;
@@ -162,6 +171,9 @@ PyObject *do_overhand(PyObject *origList, int num_shuffles)
 
 PyObject *do_riffle(PyObject *origList, int num_shuffles)
 {
+
+	if (num_shuffles == 0) { return origList; }
+
 	// how many times an item has been used consecutively from the same half
 	int const max_streak = 10;
 	int m, f, l, last_half_start, streak, *current_ptr;
@@ -260,11 +272,11 @@ static PyObject *shuffle_pile(PyObject *self, PyObject *args)
 {
 
 	PyObject * origList;
+	int num_piles;
 	int num_shuffles = 1;
-	int num_piles = 2;
 
 	// parse args to list
-	if (! PyArg_ParseTuple( args, "O|i|i", &origList, &num_piles, &num_shuffles) )
+	if (! PyArg_ParseTuple( args, "Oi|i", &origList, &num_piles, &num_shuffles) )
 	{
 		return NULL;
 	}
