@@ -33,6 +33,8 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 
 			card_index += num_piles;
 		}
+
+		printf("End Pile ----------------------");
 	}
 
 	// recursively shuffle the desired amount
@@ -64,7 +66,7 @@ PyObject *do_mongean(PyObject *origList, int num_shuffles)
 		}
 		else  // odd (front)
 		{
-			current += (i + 1);
+			current -= (i + 1);
 		}
 
 		printf("Current => %d\n", current);
