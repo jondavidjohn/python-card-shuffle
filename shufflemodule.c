@@ -67,7 +67,7 @@ PyObject *do_mongean(PyObject *origList, int num_shuffles)
 
 	int i;
 	int current;
-	for(i = 0, current = length / 2; (current + (i + 1)) < length && (current - (i + 1)) > 0; i++)
+	for(i = 0, current = length / 2; i < length; i++)
 	{
 
 		printf("BEGIN CURRENT => %d\n", current);
