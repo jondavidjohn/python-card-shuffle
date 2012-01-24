@@ -43,6 +43,7 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 	printf("End Shuffle ======== \n");
 
 	// recursively shuffle the desired amount
+	printf("NUM_SHUFFLES => %d\n", num_shuffles);
 	num_shuffles--;
 	if (num_shuffles > 0)
 		shuffledList = do_pile(shuffledList, num_piles, num_shuffles);
@@ -68,15 +69,6 @@ PyObject *do_mongean(PyObject *origList, int num_shuffles)
 	for(i = 0, current = length / 2; (current + (i + 1)) < length && (current - (i + 1)) > 0; i++)
 	{
 
-		if (i % 2)  // even (back)
-		{
-			current += (i + 1);
-		}
-		else  // odd (front)
-		{
-			current -= (i + 1);
-		}
-
 		printf("Current => %d\n", current);
 
 		PyObject *temp = PyList_GetItem(origList, i);
@@ -86,6 +78,15 @@ PyObject *do_mongean(PyObject *origList, int num_shuffles)
 		}
 		PyList_SET_ITEM(shuffledList, current , temp);
 		Py_INCREF(temp);
+
+		if (i % 2)  // even (back)
+		{
+			current += (i + 1);
+		}
+		else  // odd (front)
+		{
+			current -= (i + 1);
+		}
 	}
 
 	// recursively shuffle the desired amount
