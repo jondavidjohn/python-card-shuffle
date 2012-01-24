@@ -3,6 +3,82 @@
 #include <stdlib.h>
 #include <string.h>
 
+PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
+{
+	srand((int)time(NULL));
+	double length;
+	PyObject * shuffledList;
+
+	length = PyList_Size(origList);
+	shuffledList = PyList_New((int)length);
+
+	for(int i = 0; i < num_piles; i++)
+	{
+
+		int card_index = i;
+
+		while ( card_index < length )
+		{
+			PyObject *temp = PyList_GetItem(origList, card_index);
+			if (temp == NULL) {
+				Py_DECREF(shuffledList);
+				return NULL;
+			}
+			PyList_SET_ITEM(shuffledList, card_index + num_piles , temp);
+			Py_INCREF(temp);
+
+			card_index += num_piles;
+		}
+	}
+
+	// recursively shuffle the desired amount
+	num_shuffles--;
+	if (num_shuffles > 0)
+		shuffledList = do_pile(shuffledList, num_piles, num_shuffles);
+
+	return shuffledList;
+
+}
+
+PyObject *do_mongean(PyObject *origList, int num_shuffles)
+{
+	srand((int)time(NULL));
+	double length;
+	PyObject * shuffledList;
+
+	length = PyList_Size(origList);
+	shuffledList = PyList_New((int)length);
+
+	for(int i = 0, current = length / 2; i < length; i++)
+	{
+
+		if (i % 2)  // even (back)
+		{
+			current += (i + 1);
+		}
+		else  // odd (front)
+		{
+			current += (i + 1);
+		}
+
+		PyObject *temp = PyList_GetItem(origList, i);
+		if (temp == NULL) {
+			Py_DECREF(shuffledList);
+			return NULL;
+		}
+		PyList_SET_ITEM(shuffledList, current , temp);
+		Py_INCREF(temp);
+	}
+
+	// recursively shuffle the desired amount
+	num_shuffles--;
+	if (num_shuffles > 0)
+		shuffledList = do_mongean(shuffledList, num_shuffles);
+
+	return shuffledList;
+
+}
+
 PyObject *do_overhand(PyObject *origList, int num_shuffles)
 {
 	srand((int)time(NULL));
@@ -168,6 +244,39 @@ PyObject *do_riffle(PyObject *origList, int num_shuffles)
 
 }
 
+static PyObject *shuffle_pile(PyObject *self, PyObject *args)
+{
+
+	PyObject * origList;
+	int num_shuffles = 1;
+	int num_piles = 2;
+
+	// parse args to list
+	if (! PyArg_ParseTuple( args, "O|i|i", &origList, &num_piles, &num_shuffles) )
+	{
+		return NULL;
+	}
+
+	return do_pile(origList, num_piles, num_shuffles);
+
+}
+
+static PyObject *shuffle_mongean(PyObject *self, PyObject *args)
+{
+
+	PyObject * origList;
+	int num_shuffles = 1;
+
+	// parse args to list
+	if (! PyArg_ParseTuple( args, "O|i", &origList, &num_shuffles) )
+	{
+		return NULL;
+	}
+
+	return do_mongean(origList, num_shuffles);
+
+}
+
 static PyObject *shuffle_overhand(PyObject *self, PyObject *args)
 {
 
@@ -202,7 +311,9 @@ static PyObject *shuffle_riffle(PyObject *self, PyObject *args)
 
 static PyMethodDef ShuffleMethods[] = {
 	{"riffle", shuffle_riffle, METH_VARARGS, "Simulate a Riffle Shuffle on a List."},
-	{"overhand", shuffle_overhand, METH_VARARGS, "Simulate an Overhand Shuffle on a List"},
+	{"overhand", shuffle_overhand, METH_VARARGS, "Simulate an Overhand Shuffle on a List."},
+	{"mongean", shuffle_mongean, METH_VARARGS, "Simulate a Mongean Shuffle on a List."}
+	{"pile", shuffle_pile, METH_VARARGS, "Simulate a Pile Shuffle on a List."}
 	{NULL, NULL, 0, NULL}
 };
 
