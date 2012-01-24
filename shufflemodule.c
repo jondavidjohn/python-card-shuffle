@@ -12,7 +12,8 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 	length = PyList_Size(origList);
 	shuffledList = PyList_New((int)length);
 
-	for(int i = 0; i < num_piles; i++)
+	int i;
+	for(i = 0; i < num_piles; i++)
 	{
 
 		int card_index = i;
@@ -49,6 +50,8 @@ PyObject *do_mongean(PyObject *origList, int num_shuffles)
 	length = PyList_Size(origList);
 	shuffledList = PyList_New((int)length);
 
+	int i;
+	int current;
 	for(int i = 0, current = length / 2; i < length; i++)
 	{
 
