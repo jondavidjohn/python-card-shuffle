@@ -6,8 +6,6 @@
 PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 {
 
-	if (num_shuffles == 0) { return origList; }
-
 	srand((int)time(NULL));
 	double length;
 	PyObject * shuffledList;
@@ -58,8 +56,6 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 PyObject *do_mongean(PyObject *origList, int num_shuffles)
 {
 
-	if (num_shuffles == 0) { return origList; }
-
 	srand((int)time(NULL));
 	double length;
 	PyObject * shuffledList;
@@ -102,8 +98,6 @@ PyObject *do_mongean(PyObject *origList, int num_shuffles)
 
 PyObject *do_overhand(PyObject *origList, int num_shuffles)
 {
-
-	if (num_shuffles == 0) { return origList; }
 
 	srand((int)time(NULL));
 	int o, s;
@@ -174,8 +168,6 @@ PyObject *do_overhand(PyObject *origList, int num_shuffles)
 
 PyObject *do_riffle(PyObject *origList, int num_shuffles)
 {
-
-	if (num_shuffles == 0) { return *origList; }
 
 	// how many times an item has been used consecutively from the same half
 	int const max_streak = 10;
