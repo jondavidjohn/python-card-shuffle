@@ -46,7 +46,9 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 	printf("NUM_SHUFFLES => %d\n", num_shuffles);
 	printf("NUM_PILES => %d\n", num_piles);
 	num_shuffles--;
+	printf("NUM!!! => %d\n", num_shuffles);
 	if (num_shuffles > 0)
+		printf("SHIT!");
 		shuffledList = do_pile(shuffledList, num_piles, num_shuffles);
 
 	return shuffledList;
@@ -70,9 +72,6 @@ PyObject *do_mongean(PyObject *origList, int num_shuffles)
 	for(i = 0, current = length / 2; i < length; i++)
 	{
 
-		printf("BEGIN CURRENT => %d\n", current);
-		printf("ITERATION => %d\n", i);
-
 		PyObject *temp = PyList_GetItem(origList, i);
 		if (temp == NULL) {
 			Py_DECREF(shuffledList);
@@ -90,10 +89,8 @@ PyObject *do_mongean(PyObject *origList, int num_shuffles)
 			current -= (i + 1);
 		}
 
-		printf("END CURRENT => %d\n", current);
 	}
 
-	printf("Finished Loop");
 	// recursively shuffle the desired amount
 	num_shuffles--;
 	if (num_shuffles > 0)
