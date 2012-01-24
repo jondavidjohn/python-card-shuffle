@@ -38,9 +38,9 @@ PyObject *do_overhand(PyObject *origList, int num_shuffles)
 		int num_items = (rand() % ceiling) + 1;
 
 		double remaining = length - o;
-		if (num_cards > remaining)
+		if (num_items > remaining)
 		{
-			num_cards = remaining;
+			num_items = remaining;
 		}
 
 		int i;
@@ -74,7 +74,7 @@ PyObject *do_overhand(PyObject *origList, int num_shuffles)
 
 PyObject *do_riffle(PyObject *origList, int num_shuffles)
 {
-	// how many times a card has been used consecutively from the same half
+	// how many times an item has been used consecutively from the same half
 	int const max_streak = 10;
 	int m, f, l, last_half_start, streak, *current_ptr;
 	double length;
