@@ -16,24 +16,19 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 	printf("Num Piles => %d\n", num_piles);
 
 	int i;
-	for(i = 0; i < num_piles; i++)
+	for(i = 0; i < length; i++)
 	{
-		printf("Pile => %d\n", i);
-		int card_index = i;
 
-		while ( (card_index + num_piles) < length )
-		{
-			printf("Card Index => %d placed in %d\n", card_index, card_index + num_piles);
-			PyObject *temp = PyList_GetItem(origList, card_index);
-			if (temp == NULL) {
-				Py_DECREF(shuffledList);
-				return NULL;
-			}
-			PyList_SET_ITEM(shuffledList, card_index + num_piles , temp);
-			Py_INCREF(temp);
+		int pile = i % num_piles;
 
-			card_index += num_piles;
+		printf("Card Index => %d placed in %d\n", i, card_index + num_piles);
+		PyObject *temp = PyList_GetItem(origList, card_index);
+		if (temp == NULL) {
+			Py_DECREF(shuffledList);
+			return NULL;
 		}
+		PyList_SET_ITEM(shuffledList, card_index + num_piles , temp);
+		Py_INCREF(temp);
 
 		printf("End Pile ----------------------\n");
 	}
