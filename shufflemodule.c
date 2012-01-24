@@ -46,8 +46,9 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 	num_shuffles--;
 	printf("NUM!!! => %d\n", num_shuffles);
 	if (num_shuffles > 0)
-		printf("SHIT!");
+	{
 		shuffledList = do_pile(shuffledList, num_piles, num_shuffles);
+	}
 
 	return shuffledList;
 
@@ -90,7 +91,9 @@ PyObject *do_mongean(PyObject *origList, int num_shuffles)
 	// recursively shuffle the desired amount
 	num_shuffles--;
 	if (num_shuffles > 0)
+	{
 		shuffledList = do_mongean(shuffledList, num_shuffles);
+	}
 
 	return shuffledList;
 
@@ -160,7 +163,9 @@ PyObject *do_overhand(PyObject *origList, int num_shuffles)
 	// recursively shuffle the desired amount
 	num_shuffles--;
 	if (num_shuffles > 0)
+	{
 		shuffledList = do_overhand(shuffledList, num_shuffles);
+	}
 
 	return shuffledList;
 
@@ -257,7 +262,9 @@ PyObject *do_riffle(PyObject *origList, int num_shuffles)
 	// recursively shuffle the desired amount
 	num_shuffles--;
 	if (num_shuffles > 0)
+	{
 		shuffledList = do_riffle(shuffledList, num_shuffles);
+	}
 
 	return shuffledList;
 
