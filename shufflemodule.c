@@ -71,6 +71,7 @@ PyObject *do_mongean(PyObject *origList, int num_shuffles)
 	{
 
 		printf("BEGIN CURRENT => %d\n", current);
+		printf("ITERATION => %d\n", i);
 
 		PyObject *temp = PyList_GetItem(origList, i);
 		if (temp == NULL) {
