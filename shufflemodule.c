@@ -12,14 +12,17 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 	length = PyList_Size(origList);
 	shuffledList = PyList_New((int)length);
 
+	printf("Num Piles => %d\n", num_piles);
+
 	int i;
 	for(i = 0; i < num_piles; i++)
 	{
-
+		printf("Pile => %d\n", i);
 		int card_index = i;
 
 		while ( card_index < length )
 		{
+			printf("Card Index => %d\n", card_index);
 			PyObject *temp = PyList_GetItem(origList, card_index);
 			if (temp == NULL) {
 				Py_DECREF(shuffledList);
@@ -63,6 +66,8 @@ PyObject *do_mongean(PyObject *origList, int num_shuffles)
 		{
 			current += (i + 1);
 		}
+
+		printf("Current => %d\n", current);
 
 		PyObject *temp = PyList_GetItem(origList, i);
 		if (temp == NULL) {
