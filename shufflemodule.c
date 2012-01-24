@@ -52,7 +52,7 @@ PyObject *do_mongean(PyObject *origList, int num_shuffles)
 
 	int i;
 	int current;
-	for(int i = 0, current = length / 2; i < length; i++)
+	for(i = 0, current = length / 2; i < length; i++)
 	{
 
 		if (i % 2)  // even (back)
