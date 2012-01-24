@@ -316,7 +316,7 @@ static PyMethodDef ShuffleMethods[] = {
 	{"riffle", shuffle_riffle, METH_VARARGS, "Simulate a Riffle Shuffle on a List."},
 	{"overhand", shuffle_overhand, METH_VARARGS, "Simulate an Overhand Shuffle on a List."},
 	{"mongean", shuffle_mongean, METH_VARARGS, "Simulate a Mongean Shuffle on a List."},
-	{"pile", shuffle_pile, METH_VARARGS, "Simulate a Pile Shuffle on a List."}
+	{"pile", shuffle_pile, METH_VARARGS, "Simulate a Pile Shuffle on a List."},
 	{NULL, NULL, 0, NULL}
 };
 
