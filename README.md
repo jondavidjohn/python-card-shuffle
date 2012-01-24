@@ -4,9 +4,9 @@ A simple python module that is meant to simulate the action of shuffling
 a python List as if it were a deck of cards.
 
 ## Types
-  http://en.wikipedia.org/wiki/Shuffling
 
-### Riffle
+### Riffle - http://en.wikipedia.org/wiki/Shuffling#Riffle
+
   Predictable behaviours that make a human riffle shuffle imperfect
 
   - Once a deck of cards is divided to each hand, the amount of cards in each hand is not (likely) equal.
@@ -17,7 +17,8 @@ a python List as if it were a deck of cards.
 shuffle.riffle(list[, int])
 ```
 
-### Overhand
+### Overhand - http://en.wikipedia.org/wiki/Shuffling#Stripping_or_overhand
+
   Predictable behaviours that make a human overhand shuffle imperfect
 
   - Random amounts of cards (chunks) are taken from the top and placed placed in the opposite hand in reverse order (retaining the order within each chunk)
