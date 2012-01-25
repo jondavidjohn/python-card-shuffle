@@ -59,7 +59,7 @@ cd ./shuffle
 sudo python setup.py install
 ```
 
-*Linux Users* - Make sure you have the ```python-dev``` package installed ( ```sudo apt-get install python-dev``` )
+**Linux Users** - Make sure you have the ```python-dev``` package installed
 
 ## Usage
 
