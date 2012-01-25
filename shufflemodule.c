@@ -8,23 +8,22 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 
 	srand((int)time(NULL));
 	double length;
+	int i;
 	PyObject * shuffledList;
 
 	length = PyList_Size(origList);
 	shuffledList = PyList_New(0);
 
-	pile_base_size = (int)length / num_piles;
+	int pile_base_size = (int)length / num_piles;
 
 	printf("Num Piles => %d\n", num_piles);
 
 	PyObject **pilesArray = malloc(num_piles * sizeof(PyObject *));
-	int i;
 	for(i = 0; i < num_piles; i++)
 	{
 		pilesArray[i] = PyList_New(0);
 	}
 
-	int i;
 	for(i = 0; i < length; i++)
 	{
 
@@ -39,7 +38,7 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 			{
 				Py_DECREF(pilesArray[i]);
 			}
-			free(pilesArray)
+			free(pilesArray);
 			return NULL;
 		}
 
@@ -52,7 +51,7 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 			{
 				Py_DECREF(pilesArray[i]);
 			}
-			free(pilesArray)
+			free(pilesArray);
 			return NULL;
 		}
 		Py_INCREF(temp);
@@ -72,7 +71,7 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 			{
 				Py_DECREF(pilesArray[i]);
 			}
-			free(pilesArray)
+			free(pilesArray);
 			return NULL;
 		}
 	}
@@ -92,7 +91,7 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 				{
 					Py_DECREF(pilesArray[i]);
 				}
-				free(pilesArray)
+				free(pilesArray);
 				return NULL;
 			}
 
@@ -105,7 +104,7 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 				{
 					Py_DECREF(pilesArray[i]);
 				}
-				free(pilesArray)
+				free(pilesArray);
 				return NULL;
 			}
 			Py_INCREF(temp);
