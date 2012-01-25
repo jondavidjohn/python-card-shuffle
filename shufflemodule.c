@@ -79,7 +79,7 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 	// Build final list
 	for(i = 0; i < num_piles; i++)
 	{
-		int pile_size = PyList_Size(pileArray[i]);
+		int pile_size = PyList_Size(pilesArray[i]);
 		int j;
 		for(j = 0, j < pile_size; j++)
 		{
@@ -117,7 +117,7 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 	{
 		Py_DECREF(pilesArray[i]);
 	}
-	free(pilesArray)
+	free(pilesArray);
 
 	// recursively shuffle the desired amount
 	num_shuffles--;
