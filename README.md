@@ -27,6 +27,14 @@ shuffle.riffle(list[, int])
 shuffle.overhand(list[, int])
 ```
 
+### Mongean - http://en.wikipedia.org/wiki/Shuffling#Mongean_shuffle
+
+  A very predictable shuffle, alternating placing the top card on the bottom/top of the new deck
+
+```
+shuffle.mongean(list[, int])
+```
+
 ## Installation
 
 ```
@@ -42,4 +50,5 @@ import shuffle
 
 riffled_list = shuffle.riffle(original_list, 3)  # riffles the list 3 times
 overhanded_list = shuffle.overhand(original_list, 2)  #overhand's the list 2 times
+mongean_list = shuffle.mongean(original_list, 5)  #mongean shuffle 5 times
 ```
