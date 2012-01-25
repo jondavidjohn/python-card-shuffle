@@ -35,7 +35,7 @@ shuffle.overhand(List original[, int shuffles])
 shuffle.mongean(List original[, int shuffles])
 ```
 
-### Overhand - http://en.wikipedia.org/wiki/Shuffling#Pile
+### Pile - http://en.wikipedia.org/wiki/Shuffling#Pile_shuffle
 
   Predictable shuffle, dealing items into N piles and then rejoining the piles
 
