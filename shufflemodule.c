@@ -12,19 +12,20 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 	PyObject * shuffledList;
 
 	length = PyList_Size(origList);
+
+	// init empty list to return
 	shuffledList = PyList_New(0);
 
-	printf("Num Piles => %d\n", num_piles);
-
+	// init piles
 	PyObject **pilesArray = malloc(num_piles * sizeof(PyObject *));
 	for(i = 0; i < num_piles; i++)
 	{
 		pilesArray[i] = PyList_New(0);
 	}
 
+	// deal items into respective piles
 	for(i = 0; i < length; i++)
 	{
-
 		int pile = i % num_piles;
 
 		// Retrieve Object
@@ -54,10 +55,8 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 		}
 		Py_INCREF(temp);
 
-		printf("added %d to pile %d\n", i, pile);
 	}
 
-	printf("Now Reverse individual piles\n");
 	// Reverse Piles
 	for(i = 0; i < num_piles; i++)
 	{
@@ -109,8 +108,7 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 		}
 	}
 
-	printf("End Shuffle ======== \n");
-
+	// free uneeded memory
 	for(i = 0; i < num_piles; i++)
 	{
 		Py_DECREF(pilesArray[i]);
