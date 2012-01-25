@@ -50,8 +50,9 @@ shuffle.pile(List original, int piles[, int shuffles])
 **Now available via ```pip```**
 
 ```
-pip install shuffle
+sudo pip install shuffle
 ```
+**Or**
 
 ```
 git clone git://github.com/jondavidjohn/Card-Shuffle-for-Python.git shuffle
