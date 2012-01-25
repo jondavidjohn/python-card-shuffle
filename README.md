@@ -50,7 +50,7 @@ shuffle.pile(List original, int piles[, int shuffles])
 **Now available via ```pip```**
 
 ```
-pip install shuffle
+sudo pip install shuffle
 ```
 **Or**
 
