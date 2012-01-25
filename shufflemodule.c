@@ -5,16 +5,11 @@
 
 PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 {
-
-	srand((int)time(NULL));
-	double length;
+	double length = PyList_Size(origList);
 	int i;
-	PyObject * shuffledList;
-
-	length = PyList_Size(origList);
 
 	// init empty list to return
-	shuffledList = PyList_New(0);
+	PyObject * shuffledList = PyList_New(0);
 
 	// init piles
 	PyObject **pilesArray = malloc(num_piles * sizeof(PyObject *));
@@ -123,24 +118,16 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 	}
 
 	return shuffledList;
-
 }
 
 PyObject *do_mongean(PyObject *origList, int num_shuffles)
 {
+	double length = PyList_Size(origList);
+	PyObject * shuffledList = PyList_New((int)length);
 
-	srand((int)time(NULL));
-	double length;
-	PyObject * shuffledList;
-
-	length = PyList_Size(origList);
-	shuffledList = PyList_New((int)length);
-
-	int i;
-	int current;
+	int i, current;
 	for(i = 0, current = length / 2; i < length; i++)
 	{
-
 		PyObject *temp = PyList_GetItem(origList, i);
 		if (temp == NULL)
 		{
@@ -150,6 +137,7 @@ PyObject *do_mongean(PyObject *origList, int num_shuffles)
 		PyList_SET_ITEM(shuffledList, current , temp);
 		Py_INCREF(temp);
 
+		// Calc position of next item
 		if (i % 2)  // even (back)
 		{
 			current += (i + 1);
@@ -158,7 +146,6 @@ PyObject *do_mongean(PyObject *origList, int num_shuffles)
 		{
 			current -= (i + 1);
 		}
-
 	}
 
 	// recursively shuffle the desired amount
@@ -169,30 +156,23 @@ PyObject *do_mongean(PyObject *origList, int num_shuffles)
 	}
 
 	return shuffledList;
-
 }
 
 PyObject *do_overhand(PyObject *origList, int num_shuffles)
 {
-
 	srand((int)time(NULL));
-	int o, s;
-	double length;
-	PyObject * shuffledList;
-
-	length = PyList_Size(origList);
-	shuffledList = PyList_New((int)length);
+	double length = PyList_Size(origList);
+	PyObject * shuffledList = PyList_New((int)length);
 
 	// progress through shuffled list (backward)
-	s = (int)length - 1;
+	int s = (int)length - 1;
 
 	// progress through original list (forward)
-	o = 0;
+	int o = 0;
 
 	// make sure we don't run off the end of the original list
 	while ( o < length )
 	{
-
 		// random item number ceiling
 		int ceiling;
 		if (length > 50)
@@ -242,32 +222,25 @@ PyObject *do_overhand(PyObject *origList, int num_shuffles)
 	}
 
 	return shuffledList;
-
 }
 
 PyObject *do_riffle(PyObject *origList, int num_shuffles)
 {
-
 	// how many times an item has been used consecutively from the same half
 	int const max_streak = 10;
-	int m, f, l, last_half_start, streak, *current_ptr;
-	double length;
+
 	srand((int)time(NULL));
-
-	PyObject * shuffledList;
-
-	length = (int)PyList_Size(origList);
-	shuffledList = PyList_New((int)length);
-
+	double length = PyList_New((int)length);
+	PyObject * shuffledList = (int)PyList_Size(origList);
 
 	// initialize the current pointer
-	current_ptr = (rand() % 2) ? &f : &l;
+	int *current_ptr = (rand() % 2) ? &f : &l;
 
 	/****
 	 * Calculate the starting point for the second half of the list
 	 * Add the half point to a random additional amount (maximum 10% of list)
 	 */
-	last_half_start = (int)(length / 2) + (rand() % (length > 10 ? (int)(.1 * length) : 2)) + 1;
+	int last_half_start = (int)(length / 2) + (rand() % (length > 10 ? (int)(.1 * length) : 2)) + 1;
 
 	/**** Identifiers
 	 * m = current total progress through shuffledList
@@ -285,6 +258,7 @@ PyObject *do_riffle(PyObject *origList, int num_shuffles)
 	 * *current_ptr++ = increment the currently select half's identifier
 	 *
 	 */
+	int m, f, l, streak;
 	for(m = 0, f = 0, l = last_half_start, streak = 0; m < length && l < length && f < last_half_start; m++, *current_ptr += 1)
 	{
 		// calculate remaining percentage of the list to process
@@ -343,12 +317,10 @@ PyObject *do_riffle(PyObject *origList, int num_shuffles)
 	}
 
 	return shuffledList;
-
 }
 
 static PyObject *shuffle_pile(PyObject *self, PyObject *args)
 {
-
 	PyObject * origList;
 	int num_piles;
 	int num_shuffles = 1;
@@ -360,12 +332,10 @@ static PyObject *shuffle_pile(PyObject *self, PyObject *args)
 	}
 
 	return do_pile(origList, num_piles, num_shuffles);
-
 }
 
 static PyObject *shuffle_mongean(PyObject *self, PyObject *args)
 {
-
 	PyObject * origList;
 	int num_shuffles = 1;
 
@@ -376,12 +346,10 @@ static PyObject *shuffle_mongean(PyObject *self, PyObject *args)
 	}
 
 	return do_mongean(origList, num_shuffles);
-
 }
 
 static PyObject *shuffle_overhand(PyObject *self, PyObject *args)
 {
-
 	PyObject * origList;
 	int num_shuffles = 1;
 
@@ -392,12 +360,10 @@ static PyObject *shuffle_overhand(PyObject *self, PyObject *args)
 	}
 
 	return do_overhand(origList, num_shuffles);
-
 }
 
 static PyObject *shuffle_riffle(PyObject *self, PyObject *args)
 {
-
 	PyObject * origList;
 	int num_shuffles = 1;
 
@@ -408,7 +374,6 @@ static PyObject *shuffle_riffle(PyObject *self, PyObject *args)
 	}
 
 	return do_riffle(origList, num_shuffles);
-
 }
 
 static PyMethodDef ShuffleMethods[] = {
