@@ -54,10 +54,10 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 		}
 		Py_INCREF(temp);
 
-		printf("added %d to pile %d", i, pile);
+		printf("added %d to pile %d\n", i, pile);
 	}
 
-	printf("Now Reverse individual piles");
+	printf("Now Reverse individual piles\n");
 	// Reverse Piles
 	for(i = 0; i < num_piles; i++)
 	{
