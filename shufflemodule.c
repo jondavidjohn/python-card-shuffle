@@ -3,6 +3,52 @@
 #include <stdlib.h>
 #include <string.h>
 
+PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
+{
+
+	srand((int)time(NULL));
+	double length;
+	PyObject * shuffledList;
+
+	length = PyList_Size(origList);
+	shuffledList = PyList_New((int)length);
+
+	printf("Num Piles => %d\n", num_piles);
+
+	int i;
+	for(i = 0; i < length; i++)
+	{
+
+		int pile = i % num_piles;
+
+		printf("Card Index => %d placed in %d\n", i, card_index + num_piles);
+		PyObject *temp = PyList_GetItem(origList, card_index);
+		if (temp == NULL) {
+			Py_DECREF(shuffledList);
+			return NULL;
+		}
+		PyList_SET_ITEM(shuffledList, card_index + num_piles , temp);
+		Py_INCREF(temp);
+
+		printf("End Pile ----------------------\n");
+	}
+
+	printf("End Shuffle ======== \n");
+
+	// recursively shuffle the desired amount
+	printf("NUM_SHUFFLES => %d\n", num_shuffles);
+	printf("NUM_PILES => %d\n", num_piles);
+	num_shuffles--;
+	printf("NUM!!! => %d\n", num_shuffles);
+	if (num_shuffles > 0)
+	{
+		shuffledList = do_pile(shuffledList, num_piles, num_shuffles);
+	}
+
+	return shuffledList;
+
+}
+
 PyObject *do_mongean(PyObject *origList, int num_shuffles)
 {
 
