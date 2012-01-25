@@ -14,7 +14,7 @@ a python List as if it were a deck of cards.
   - As the deck in each hand gets more and more thin, the probability of larger chucks of cards dropping from each hand increases.
 
 ```
-shuffle.riffle(list[, int])
+shuffle.riffle(List original[, int shuffles])
 ```
 
 ### Overhand - http://en.wikipedia.org/wiki/Shuffling#Stripping_or_overhand
@@ -24,7 +24,7 @@ shuffle.riffle(list[, int])
   - Random amounts of cards (chunks) are taken from the top and placed placed in the opposite hand in reverse order (retaining the order within each chunk)
 
 ```
-shuffle.overhand(list[, int])
+shuffle.overhand(List original[, int shuffles])
 ```
 
 ### Mongean - http://en.wikipedia.org/wiki/Shuffling#Mongean_shuffle
@@ -32,8 +32,18 @@ shuffle.overhand(list[, int])
   A very predictable shuffle, alternating placing the top card on the bottom/top of the new deck
 
 ```
-shuffle.mongean(list[, int])
+shuffle.mongean(List original[, int shuffles])
 ```
+
+### Overhand - http://en.wikipedia.org/wiki/Shuffling#Pile
+
+  Predictable shuffle, dealing items into N piles and then rejoining the piles
+
+
+```
+shuffle.pile(list original, int piles[, int shuffles])
+```
+
 
 ## Installation
 
@@ -50,5 +60,6 @@ import shuffle
 
 riffled_list = shuffle.riffle(original_list, 3)  # riffles the list 3 times
 overhanded_list = shuffle.overhand(original_list, 2)  #overhand's the list 2 times
-mongean_list = shuffle.mongean(original_list, 5)  #mongean shuffle 5 times
+mongeaned_list = shuffle.mongean(original_list, 5)  #mongean shuffle 5 times
+piled_list = shuffle.pile(original_list, 3, 6)  #pile shuffle, using 3 piles, 6 times
 ```
