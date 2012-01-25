@@ -13,7 +13,7 @@ a python List as if it were a deck of cards.
   - As each thumb releases from it's half of the deck, sometimes more than one card drops from a single hand at a time.
   - As the deck in each hand gets more and more thin, the probability of larger chucks of cards dropping from each hand increases.
 
-```
+```python
 shuffle.riffle(List original[, int shuffles])
 ```
 
@@ -23,7 +23,7 @@ shuffle.riffle(List original[, int shuffles])
 
   - Random amounts of cards (chunks) are taken from the top and placed placed in the opposite hand in reverse order (retaining the order within each chunk)
 
-```
+```python
 shuffle.overhand(List original[, int shuffles])
 ```
 
@@ -31,17 +31,17 @@ shuffle.overhand(List original[, int shuffles])
 
   A very predictable shuffle, alternating placing the top card on the bottom/top of the new deck
 
-```
+```python
 shuffle.mongean(List original[, int shuffles])
 ```
 
-### Overhand - http://en.wikipedia.org/wiki/Shuffling#Pile
+### Pile - http://en.wikipedia.org/wiki/Shuffling#Pile_shuffle
 
   Predictable shuffle, dealing items into N piles and then rejoining the piles
 
 
-```
-shuffle.pile(list original, int piles[, int shuffles])
+```python
+shuffle.pile(List original, int piles[, int shuffles])
 ```
 
 
