@@ -39,8 +39,9 @@ As the deck in each hand gets more and more thin, the probability of larger chuc
 
     shuffle.riffle(List original[, int shuffles])
 
-**Overhand** - http://en.wikipedia.org/wiki/Shuffling#Stripping_or_overhand
----------------------------------------------------------------------------
+Overhand
+--------
+http://en.wikipedia.org/wiki/Shuffling#Stripping_or_overhand
 
 Predictable behaviours that make a human overhand shuffle imperfect
 
