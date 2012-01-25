@@ -1,26 +1,3 @@
-from distutils.core import setup, Extension
-
-module = Extension('shuffle', sources=['shufflemodule.c'])
-setup(
-	name = 'shuffle',
-	version = '0.9',
-	description = 'Simulate Human Card Shuffling Techniques for use with Python Lists',
-	author = 'Jonathan Johnson',
-	author_email = 'me@jondavidjohn.com',
-	url = 'https://github.com/jondavidjohn/Card-Shuffle-for-Python',
-    download_url = "https://github.com/jondavidjohn/Card-Shuffle-for-Python/tarball/master",
-    keywords = ["card", "shuffle", "list", "random"],
-    classifiers = [
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 3",
-        "Development Status :: 4 - Beta",
-        "Intended Audience :: Developers",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
-        "Topic :: Software Development :: Libraries :: Python Modules",
-        "Topic :: Utilities"
-    ],
-    long_description = """\
 A simple python module that is meant to simulate the action of shuffling a python List as if it were a deck of cards.
 
 =====
@@ -86,6 +63,3 @@ overhanded_list = shuffle.overhand(original_list, 2)  #overhand's the list 2 tim
 mongeaned_list = shuffle.mongean(original_list, 5)  #mongean shuffle 5 times
 
 piled_list = shuffle.pile(original_list, 3, 6)  #pile shuffle, using 3 piles, 6 times
-""",
-	ext_modules=[module]
-)

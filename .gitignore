@@ -1,3 +1,6 @@
 build/
 PyMock/
+dist/
+MANIFEST
 *.pyc
+!MANIFEST.in
