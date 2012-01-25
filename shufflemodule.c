@@ -63,7 +63,7 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 	// Reverse Piles
 	for(i = 0; i < num_piles; i++)
 	{
-		int test = PyList_Reverse(pilesArray[pile]);
+		int test = PyList_Reverse(pilesArray[i]);
 		if (test != 0)
 		{
 			Py_DECREF(shuffledList);
@@ -83,7 +83,7 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 		int j;
 		for(j = 0, j < pile_size; j++)
 		{
-			PyObject *temp = PyList_GetItem(pileArray[i], j);
+			PyObject *temp = PyList_GetItem(pilesArray[i], j);
 			if (temp == NULL)
 			{
 				Py_DECREF(shuffledList);
