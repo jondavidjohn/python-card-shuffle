@@ -14,8 +14,6 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 	length = PyList_Size(origList);
 	shuffledList = PyList_New(0);
 
-	int pile_base_size = (int)length / num_piles;
-
 	printf("Num Piles => %d\n", num_piles);
 
 	PyObject **pilesArray = malloc(num_piles * sizeof(PyObject *));
@@ -81,7 +79,7 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 	{
 		int pile_size = PyList_Size(pilesArray[i]);
 		int j;
-		for(j = 0, j < pile_size; j++)
+		for(j = 0; j < pile_size; j++)
 		{
 			PyObject *temp = PyList_GetItem(pilesArray[i], j);
 			if (temp == NULL)
