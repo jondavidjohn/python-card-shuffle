@@ -11,9 +11,18 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 	PyObject * shuffledList;
 
 	length = PyList_Size(origList);
-	shuffledList = PyList_New((int)length);
+	shuffledList = PyList_New(0);
+
+	pile_base_size = (int)length / num_piles;
 
 	printf("Num Piles => %d\n", num_piles);
+
+	PyObject **pilesArray = malloc(num_piles * sizeof(PyObject *));
+	int i;
+	for(i = 0; i < num_piles; i++)
+	{
+		pilesArray[i] = PyList_New(0);
+	}
 
 	int i;
 	for(i = 0; i < length; i++)
@@ -21,25 +30,98 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 
 		int pile = i % num_piles;
 
-		printf("Card Index => %d placed in %d\n", i, card_index + num_piles);
-		PyObject *temp = PyList_GetItem(origList, card_index);
-		if (temp == NULL) {
+		// Retrieve Object
+		PyObject *temp = PyList_GetItem(origList, i);
+		if (temp == NULL)
+		{
 			Py_DECREF(shuffledList);
+			for(i = 0; i < num_piles; i++)
+			{
+				Py_DECREF(pilesArray[i]);
+			}
+			free(pilesArray)
 			return NULL;
 		}
-		PyList_SET_ITEM(shuffledList, card_index + num_piles , temp);
+
+		// append the item
+		int test = PyList_Append(pilesArray[pile], temp);
+		if (test != 0)
+		{
+			Py_DECREF(shuffledList);
+			for(i = 0; i < num_piles; i++)
+			{
+				Py_DECREF(pilesArray[i]);
+			}
+			free(pilesArray)
+			return NULL;
+		}
 		Py_INCREF(temp);
 
-		printf("End Pile ----------------------\n");
+		printf("added %d to pile %d", i, pile);
+	}
+
+	printf("Now Reverse individual piles");
+	// Reverse Piles
+	for(i = 0; i < num_piles; i++)
+	{
+		int test = PyList_Reverse(pilesArray[pile]);
+		if (test != 0)
+		{
+			Py_DECREF(shuffledList);
+			for(i = 0; i < num_piles; i++)
+			{
+				Py_DECREF(pilesArray[i]);
+			}
+			free(pilesArray)
+			return NULL;
+		}
+	}
+
+	// Build final list
+	for(i = 0; i < num_piles; i++)
+	{
+		int pile_size = PyList_Size(pileArray[i]);
+		int j;
+		for(j = 0, j < pile_size; j++)
+		{
+			PyObject *temp = PyList_GetItem(pileArray[i], j);
+			if (temp == NULL)
+			{
+				Py_DECREF(shuffledList);
+				for(i = 0; i < num_piles; i++)
+				{
+					Py_DECREF(pilesArray[i]);
+				}
+				free(pilesArray)
+				return NULL;
+			}
+
+			// append the item
+			int test = PyList_Append(shuffledList, temp);
+			if (test != 0)
+			{
+				Py_DECREF(shuffledList);
+				for(i = 0; i < num_piles; i++)
+				{
+					Py_DECREF(pilesArray[i]);
+				}
+				free(pilesArray)
+				return NULL;
+			}
+			Py_INCREF(temp);
+		}
 	}
 
 	printf("End Shuffle ======== \n");
 
+	for(i = 0; i < num_piles; i++)
+	{
+		Py_DECREF(pilesArray[i]);
+	}
+	free(pilesArray)
+
 	// recursively shuffle the desired amount
-	printf("NUM_SHUFFLES => %d\n", num_shuffles);
-	printf("NUM_PILES => %d\n", num_piles);
 	num_shuffles--;
-	printf("NUM!!! => %d\n", num_shuffles);
 	if (num_shuffles > 0)
 	{
 		shuffledList = do_pile(shuffledList, num_piles, num_shuffles);
@@ -65,7 +147,8 @@ PyObject *do_mongean(PyObject *origList, int num_shuffles)
 	{
 
 		PyObject *temp = PyList_GetItem(origList, i);
-		if (temp == NULL) {
+		if (temp == NULL)
+		{
 			Py_DECREF(shuffledList);
 			return NULL;
 		}
@@ -141,7 +224,8 @@ PyObject *do_overhand(PyObject *origList, int num_shuffles)
 			// add item to new shuffledList from the the origList
 			// o + i = position in original list
 			PyObject *temp = PyList_GetItem(origList, o + i);
-			if (temp == NULL) {
+			if (temp == NULL)
+			{
 				Py_DECREF(shuffledList);
 				return NULL;
 			}
@@ -197,7 +281,7 @@ PyObject *do_riffle(PyObject *origList, int num_shuffles)
 	 * streak = count of how many times a card has been used consecutively from the same half
 	 *
 	 **** Conditions
-	 * m < length = make sure we don't run off the end of shuffledArray
+	 * m < length = make sure we don't run off the end of shuffledList
 	 * l < length = make sure we don't run off the end of the last half
 	 * f < last_half_start = make sure we don't run into the last half with the first half identifier
 	 *
@@ -225,7 +309,8 @@ PyObject *do_riffle(PyObject *origList, int num_shuffles)
 
 		// add item to new shuffledList from the *current_ptr position in the origList
 		PyObject *temp = PyList_GetItem(origList, *current_ptr);
-		if (temp == NULL) {
+		if (temp == NULL)
+		{
 			Py_DECREF(shuffledList);
 			return NULL;
 		}
@@ -244,7 +329,8 @@ PyObject *do_riffle(PyObject *origList, int num_shuffles)
 	while(m < (int)length)
 	{
 		PyObject *temp = PyList_GetItem(origList, *current_ptr);
-		if (temp == NULL) {
+		if (temp == NULL)
+		{
 			Py_DECREF(shuffledList);
 			return NULL;
 		}
