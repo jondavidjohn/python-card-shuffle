@@ -174,15 +174,7 @@ PyObject *do_overhand(PyObject *origList, int num_shuffles)
 	while ( o < length )
 	{
 		// random item number ceiling
-		int ceiling;
-		if (length > 50)
-		{
-			ceiling = 10;
-		}
-		else
-		{
-			ceiling = length > 10 ? (int)(.1 * length) : 1;
-		}
+		int ceiling = length > 4 ? (int)(.2 * length) : 1;
 
 		// get random number of items (min of 1), respecting the limit
 		int num_items = (rand() % ceiling) + 1;
