@@ -50,8 +50,10 @@ shuffle.pile(List original, int piles[, int shuffles])
 ```
 git clone git://github.com/jondavidjohn/Card-Shuffle-for-Python.git shuffle
 cd ./shuffle
-python setup.py install
+sudo python setup.py install
 ```
+
+*Linux Users* - Make sure you have the ```python-dev``` package installed ( ```sudo apt-get install python-dev``` )
 
 ## Usage
 
