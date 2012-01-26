@@ -71,7 +71,7 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 	// Build final list
 	for(i = 0; i < num_piles; i++)
 	{
-		int pile_size = PyList_Size(pilesArray[i]);
+		int pile_size = (int)PyList_Size(pilesArray[i]);
 		int j;
 		for(j = 0; j < pile_size; j++)
 		{
@@ -126,7 +126,7 @@ PyObject *do_mongean(PyObject *origList, int num_shuffles)
 	PyObject * shuffledList = PyList_New((int)length);
 
 	int i, current;
-	for(i = 0, current = length / 2; i < length; i++)
+	for(i = 0, current = (int)length / 2; i < length; i++)
 	{
 		PyObject *temp = PyList_GetItem(origList, i);
 		if (temp == NULL)
@@ -179,7 +179,7 @@ PyObject *do_overhand(PyObject *origList, int num_shuffles)
 		// get random number of items (min of 1), respecting the limit
 		int num_items = (rand() % ceiling) + 1;
 
-		double remaining = length - o;
+		int remaining = (int)length - o;
 		if (num_items > remaining)
 		{
 			num_items = remaining;
