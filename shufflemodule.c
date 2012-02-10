@@ -222,7 +222,7 @@ PyObject *do_riffle(PyObject *origList, int num_shuffles)
 	int const max_streak = 10;
 
 	srand((int)time(NULL));
-	double length = (int)PyList_Size(origList);
+	double length = PyList_Size(origList);
 	PyObject * shuffledList = PyList_New((int)length);
 
 	/****
