@@ -3,7 +3,7 @@
 [![Downloads](https://pypip.in/d/shuffle/badge.png)](https://crate.io/packages/shuffle/)
 
 A simple python module that is meant to simulate the action of shuffling
-a python List as if it were a deck of cards.
+a python list as if it were a deck of cards.
 
 ## Types
 
