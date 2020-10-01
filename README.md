@@ -1,4 +1,5 @@
 # Shuffle
+Improve Dos
 
 [![Downloads](https://pypip.in/d/shuffle/badge.png)](https://crate.io/packages/shuffle/)
 
