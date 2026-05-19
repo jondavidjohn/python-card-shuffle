@@ -222,14 +222,28 @@ PyObject *do_riffle(PyObject *origList, int num_shuffles)
 	int const max_streak = 10;
 
 	srand((int)time(NULL));
-	double length = PyList_Size(origList);
-	PyObject * shuffledList = PyList_New((int)length);
+	Py_ssize_t length = PyList_Size(origList);
+	if (length < 0)
+	{
+		return NULL;
+	}
+
+	if (length < 2)
+	{
+		return PyList_GetSlice(origList, 0, length);
+	}
+
+	PyObject * shuffledList = PyList_New(length);
 
 	/****
 	 * Calculate the starting point for the second half of the list
 	 * Add the half point to a random additional amount (maximum 10% of list)
 	 */
 	int last_half_start = (int)(length / 2) + (rand() % (length > 10 ? (int)(.1 * length) : 2)) + 1;
+	if (last_half_start >= length)
+	{
+		last_half_start = (int)length - 1;
+	}
 
 	/**** Identifiers
 	 * m = current total progress through shuffledList
