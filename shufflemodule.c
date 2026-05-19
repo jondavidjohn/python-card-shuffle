@@ -336,6 +336,12 @@ static PyObject *shuffle_pile(PyObject *self, PyObject *args)
 		return NULL;
 	}
 
+	if (num_piles < 1)
+	{
+		PyErr_SetString(PyExc_ValueError, "num_piles must be greater than 0");
+		return NULL;
+	}
+
 	return do_pile(origList, num_piles, num_shuffles);
 }
 
