@@ -1,3 +1,4 @@
+import sys
 import unittest
 
 import shuffle
@@ -45,6 +46,31 @@ class PileTests(unittest.TestCase):
 		self.assertIsNot(shuffled, deck)
 		self.assertEqual(len(shuffled), len(deck))
 		self.assertCountEqual(shuffled, deck)
+
+
+class RefCountTests(unittest.TestCase):
+	def assertShuffleDoesNotLeakItemRefs(self, shuffle_func):
+		marker = object()
+		deck = [marker] + [object() for _ in range(9)]
+		before = sys.getrefcount(marker)
+
+		shuffled = shuffle_func(deck)
+		self.assertEqual(sys.getrefcount(marker), before + 1)
+
+		del shuffled
+		self.assertEqual(sys.getrefcount(marker), before)
+
+	def test_riffle_does_not_leak_item_refs(self):
+		self.assertShuffleDoesNotLeakItemRefs(lambda deck: shuffle.riffle(deck, 3))
+
+	def test_overhand_does_not_leak_item_refs(self):
+		self.assertShuffleDoesNotLeakItemRefs(lambda deck: shuffle.overhand(deck, 3))
+
+	def test_mongean_does_not_leak_item_refs(self):
+		self.assertShuffleDoesNotLeakItemRefs(lambda deck: shuffle.mongean(deck, 3))
+
+	def test_pile_does_not_leak_item_refs(self):
+		self.assertShuffleDoesNotLeakItemRefs(lambda deck: shuffle.pile(deck, 3, 3))
 
 
 if __name__ == '__main__':

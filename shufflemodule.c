@@ -48,8 +48,6 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 			free(pilesArray);
 			return NULL;
 		}
-		Py_INCREF(temp);
-
 	}
 
 	// Reverse Piles
@@ -99,7 +97,6 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 				free(pilesArray);
 				return NULL;
 			}
-			Py_INCREF(temp);
 		}
 	}
 
@@ -114,7 +111,9 @@ PyObject *do_pile(PyObject *origList, int num_piles, int num_shuffles)
 	num_shuffles--;
 	if (num_shuffles > 0)
 	{
-		shuffledList = do_pile(shuffledList, num_piles, num_shuffles);
+		PyObject *nextList = do_pile(shuffledList, num_piles, num_shuffles);
+		Py_DECREF(shuffledList);
+		shuffledList = nextList;
 	}
 
 	return shuffledList;
@@ -134,8 +133,8 @@ PyObject *do_mongean(PyObject *origList, int num_shuffles)
 			Py_DECREF(shuffledList);
 			return NULL;
 		}
-		PyList_SET_ITEM(shuffledList, current , temp);
 		Py_INCREF(temp);
+		PyList_SET_ITEM(shuffledList, current , temp);
 
 		// Calc position of next item
 		if (i % 2)  // even (back)
@@ -152,7 +151,9 @@ PyObject *do_mongean(PyObject *origList, int num_shuffles)
 	num_shuffles--;
 	if (num_shuffles > 0)
 	{
-		shuffledList = do_mongean(shuffledList, num_shuffles);
+		PyObject *nextList = do_mongean(shuffledList, num_shuffles);
+		Py_DECREF(shuffledList);
+		shuffledList = nextList;
 	}
 
 	return shuffledList;
@@ -197,8 +198,8 @@ PyObject *do_overhand(PyObject *origList, int num_shuffles)
 				return NULL;
 			}
 			// s - (num_items - (i + 1)) = new position in shuffledList
-			PyList_SET_ITEM(shuffledList, s - (num_items - (i + 1)) , temp);
 			Py_INCREF(temp);
+			PyList_SET_ITEM(shuffledList, s - (num_items - (i + 1)) , temp);
 		}
 
 		// move progress identifiers to next position
@@ -210,7 +211,9 @@ PyObject *do_overhand(PyObject *origList, int num_shuffles)
 	num_shuffles--;
 	if (num_shuffles > 0)
 	{
-		shuffledList = do_overhand(shuffledList, num_shuffles);
+		PyObject *nextList = do_overhand(shuffledList, num_shuffles);
+		Py_DECREF(shuffledList);
+		shuffledList = nextList;
 	}
 
 	return shuffledList;
@@ -288,8 +291,8 @@ PyObject *do_riffle(PyObject *origList, int num_shuffles)
 			Py_DECREF(shuffledList);
 			return NULL;
 		}
-		PyList_SET_ITEM(shuffledList, m, temp);
 		Py_INCREF(temp);
+		PyList_SET_ITEM(shuffledList, m, temp);
 
 		// increment streak
 		streak += 1;
@@ -308,8 +311,8 @@ PyObject *do_riffle(PyObject *origList, int num_shuffles)
 			Py_DECREF(shuffledList);
 			return NULL;
 		}
-		PyList_SET_ITEM(shuffledList, m, temp);
 		Py_INCREF(temp);
+		PyList_SET_ITEM(shuffledList, m, temp);
 		m++;
 		*current_ptr += 1;
 	}
@@ -318,7 +321,9 @@ PyObject *do_riffle(PyObject *origList, int num_shuffles)
 	num_shuffles--;
 	if (num_shuffles > 0)
 	{
-		shuffledList = do_riffle(shuffledList, num_shuffles);
+		PyObject *nextList = do_riffle(shuffledList, num_shuffles);
+		Py_DECREF(shuffledList);
+		shuffledList = nextList;
 	}
 
 	return shuffledList;
