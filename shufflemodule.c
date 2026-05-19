@@ -375,6 +375,22 @@ static PyMethodDef ShuffleMethods[] = {
 	{NULL, NULL, 0, NULL}
 };
 
-void initshuffle(void){
+#if PY_MAJOR_VERSION >= 3
+static struct PyModuleDef shufflemodule = {
+	PyModuleDef_HEAD_INIT,
+	"shuffle",
+	NULL,
+	-1,
+	ShuffleMethods
+};
+
+PyMODINIT_FUNC PyInit_shuffle(void)
+{
+	return PyModule_Create(&shufflemodule);
+}
+#else
+void initshuffle(void)
+{
 	(void) Py_InitModule("shuffle", ShuffleMethods);
 }
+#endif
